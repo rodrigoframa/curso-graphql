@@ -39,20 +39,37 @@ module.exports = {
         const excluidos = usuarios.splice(i, 1)
         return excluidos ? excluidos[0] : null
     },
-    alterarUsuario(_, args) {
-        const i = usuarios
-            .findIndex(u => u.id === args.id)
-        
+    alterarUsuario(_, { dados, filtro }) {
+        const i = indiceUsuario(filtro)
+
         if (i < 0) return null
 
-        const usuario = {
-            ...usuarios[i],
-            ...args
+        const { nome, email, idade } = dados
+
+        const emailUsuarioAlterado = usuarios[i].email !== email
+
+        const emailExistente = usuarios
+            .some(u => u.email === email)
+
+        if(emailUsuarioAlterado && emailExistente) {
+            throw new Error('E-mail já cadastrado para outro usuário')
         }
 
-        usuarios.splice(i, 1, usuario)
+        usuarios[i].nome = nome
+        usuarios[i].email = email
+        if(idade) {
+            usuarios[i].idade = idade
+        }
 
-        return usuario
+        // const usuario = {
+            // ...usuarios[i],
+            // ...dados
+        // }
+
+        // usuarios.splice(i, 1, usuario)
+
+        // return usuario
+        return usuarios[i]
         
     }
 
