@@ -2,6 +2,10 @@
     <v-card v-if="usuario" class="ma-3 pa-2">
         <v-layout fill-height align-center>
             <v-flex>
+                <span class="ml-3 headline"><strong>Id: </strong></span>
+                <span class="headline blue--text text--darken-2">
+                    {{ usuario.id }}</span>
+
                 <span class="ml-3 headline"><strong>Nome: </strong></span>
                 <span class="headline blue--text text--darken-2">
                     {{ usuario.nome }}</span>
